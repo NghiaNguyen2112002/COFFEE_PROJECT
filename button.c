@@ -9,6 +9,7 @@ static unsigned char buttonBuffer[NO_OF_BUTTONS] = {BUTTON_IS_RELEASED, BUTTON_I
 static unsigned char debounceButtonBuffer1[NO_OF_BUTTONS];
 static unsigned char debounceButtonBuffer2[NO_OF_BUTTONS];
 
+static unsigned char flagForButtonPress[NO_OF_BUTTONS];
 static unsigned char flagForButtonPress_s[NO_OF_BUTTONS];
 static unsigned int counterForButtonPress[NO_OF_BUTTONS];
 
@@ -27,6 +28,8 @@ void button_reading(void){
                 else flagForButtonPress_s[i] = 1;
             }
             else{
+//                releasing button after press => pressed flag = 1
+                flagForButtonPress[i] = counterForButtonPress[i];
                 counterForButtonPress[i] = 0;
                 flagForButtonPress_s[i] = 0;
             }
@@ -38,13 +41,13 @@ void button_reading(void){
 unsigned char is_button_held(unsigned char index){
     if(index >= NO_OF_BUTTONS) return 0;
     
-    return counterForButtonPress[index] > 0;
+    return counterForButtonPress[index];
 }
 
 unsigned char is_button_pressed(unsigned char index){
     if(index >= NO_OF_BUTTONS) return 0;
     
-    return counterForButtonPress[index] == 1;
+    return flagForButtonPress[index]; 
 }
 unsigned char is_button_pressed_s(unsigned char index){
     if(index >= NO_OF_BUTTONS) return 0xFF;

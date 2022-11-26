@@ -1,7 +1,7 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"10 main.c
-[c E633 0 1 2 3 .. ]
-[n E633 MODE_FSM INIT ADJUSTING AUTO_BREWING AUTO_CLEANING  ]
+"11 main.c
+[c E633 0 1 2 3 4 5 .. ]
+[n E633 MODE_FSM INIT ADJUSTING_AUTO_0 ADJUSTING_AUTO_1 BREWING_0 BREWING_1 AUTO_CLEANING  ]
 "1462 C:\Program Files (x86)\Microchip\xc8\v1.36\include\pic16f628a.h
 [v _TMR1IF `Vb ~T0 @X0 0 e@96 ]
 "1460
@@ -14,43 +14,26 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _timer1_isr `(v ~T0 @X0 0 ef ]
 "22 button.h
 [v _button_reading `(v ~T0 @X0 0 ef ]
-"20 led7seg.h
-[v _UpdateLed `(v ~T0 @X0 0 ef1`uc ]
+"307 C:\Program Files (x86)\Microchip\xc8\v1.36\include\pic16f628a.h
+[s S13 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S13 . RBIF INTF T0IF RBIE INTE T0IE PEIE GIE ]
+"317
+[s S14 :2 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 ]
+[n S14 . . TMR0IF . TMR0IE ]
+"306
+[u S12 `S13 1 `S14 1 ]
+[n S12 . . . ]
+"324
+[v _INTCONbits `VS12 ~T0 @X0 0 e@11 ]
 [p mainexit ]
-"20 main.c
+"22 main.c
 [v _InitSystem `(v ~T0 @X0 0 ef ]
 "25 button.h
 [v _is_button_pressed `(uc ~T0 @X0 0 ef1`uc ]
-"19 led7seg.h
-[v _UpdateLedBuffer `(v ~T0 @X0 0 ef1`uc ]
-"24 main.c
-[v _RelayOn `(v ~T0 @X0 0 ef1`uc ]
-"24 button.h
-[v _is_button_held `(uc ~T0 @X0 0 ef1`uc ]
-"27 main.c
-[v _WriteEEPROM `(v ~T0 @X0 0 ef2`uc`uc ]
-"22
-[v _Delay_ms `(v ~T0 @X0 0 ef1`ui ]
-"26 button.h
+"26
 [v _is_button_pressed_s `(uc ~T0 @X0 0 ef1`uc ]
-"25 timer.h
-[v _SetTimer1_ms `(v ~T0 @X0 0 ef1`i ]
-"15
-[v _flag_timer1 `uc ~T0 @X0 0 e ]
-"743 C:\Program Files (x86)\Microchip\xc8\v1.36\include\pic16f628a.h
-[v _CMCON `Vuc ~T0 @X0 0 e@31 ]
-"881
-[v _TRISA `Vuc ~T0 @X0 0 e@133 ]
-"942
-[v _TRISB `Vuc ~T0 @X0 0 e@134 ]
-"160
-[v _PORTA `Vuc ~T0 @X0 0 e@5 ]
-"221
-[v _PORTB `Vuc ~T0 @X0 0 e@6 ]
-"18 timer.h
-[v _init_timer1 `(v ~T0 @X0 0 ef1`ui ]
-"26 main.c
-[v _ReadEEPROM `(uc ~T0 @X0 0 ef1`uc ]
+"29 main.c
+[v _WriteEEPROM `(v ~T0 @X0 0 ef2`uc`uc ]
 "166 C:\Program Files (x86)\Microchip\xc8\v1.36\include\pic16f628a.h
 [s S7 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S7 . RA0 RA1 RA2 RA3 RA4 RA5 RA6 RA7 ]
@@ -59,7 +42,38 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S6 . . ]
 "177
 [v _PORTAbits `VS6 ~T0 @X0 0 e@5 ]
-"1181
+"15 timer.h
+[v _flag_timer1 `uc ~T0 @X0 0 e ]
+"25
+[v _SetTimer1_ms `(v ~T0 @X0 0 ef1`i ]
+"24 main.c
+[v _Delay_ms `(v ~T0 @X0 0 ef1`ui ]
+"743 C:\Program Files (x86)\Microchip\xc8\v1.36\include\pic16f628a.h
+[v _CMCON `Vuc ~T0 @X0 0 e@31 ]
+"818
+[s S33 :3 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S33 . PS PSA T0SE T0CS INTEDG nRBPU ]
+"826
+[s S34 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S34 . PS0 PS1 PS2 ]
+"817
+[u S32 `S33 1 `S34 1 ]
+[n S32 . . . ]
+"832
+[v _OPTION_REGbits `VS32 ~T0 @X0 0 e@129 ]
+"881
+[v _TRISA `Vuc ~T0 @X0 0 e@133 ]
+"160
+[v _PORTA `Vuc ~T0 @X0 0 e@5 ]
+"221
+[v _PORTB `Vuc ~T0 @X0 0 e@6 ]
+"28 main.c
+[v _ReadEEPROM `(uc ~T0 @X0 0 ef1`uc ]
+"26
+[v _RelayOn `(v ~T0 @X0 0 ef1`uc ]
+"18 timer.h
+[v _init_timer1 `(v ~T0 @X0 0 ef1`ui ]
+"1181 C:\Program Files (x86)\Microchip\xc8\v1.36\include\pic16f628a.h
 [v _EEADR `Vuc ~T0 @X0 0 e@155 ]
 "1193
 [s S48 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
@@ -71,17 +85,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _EECON1bits `VS47 ~T0 @X0 0 e@156 ]
 "1175
 [v _EEDATA `Vuc ~T0 @X0 0 e@154 ]
-"307
-[s S13 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S13 . RBIF INTF T0IF RBIE INTE T0IE PEIE GIE ]
-"317
-[s S14 :2 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 ]
-[n S14 . . TMR0IF . TMR0IE ]
-"306
-[u S12 `S13 1 `S14 1 ]
-[n S12 . . . ]
-"324
-[v _INTCONbits `VS12 ~T0 @X0 0 e@11 ]
 "1224
 [v _EECON2 `Vuc ~T0 @X0 0 e@157 ]
 "384
@@ -675,465 +678,462 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;button.h: 24: unsigned char is_button_held(unsigned char index);
 [; ;button.h: 25: unsigned char is_button_pressed(unsigned char index);
 [; ;button.h: 26: unsigned char is_button_pressed_s(unsigned char index);
-"33 main.h
+"30 main.h
 [p x FOSC=INTOSCIO ]
-"34
+"31
 [p x WDTE=OFF ]
-"35
+"32
 [p x PWRTE=OFF ]
-"36
+"33
 [p x MCLRE=OFF ]
-"37
+"34
 [p x BOREN=OFF ]
-"38
+"35
 [p x LVP=OFF ]
-"39
+"36
 [p x CPD=OFF ]
-"40
+"37
 [p x CP=OFF ]
-[; ;main.c: 9: enum MODE_FSM {INIT, ADJUSTING, AUTO_BREWING, AUTO_CLEANING};
-"10 main.c
+[; ;main.c: 9: enum MODE_FSM {INIT, ADJUSTING_AUTO_0, ADJUSTING_AUTO_1,
+[; ;main.c: 10: BREWING_0, BREWING_1, AUTO_CLEANING};
+"11 main.c
 [v _mode `E633 ~T0 @X0 1 e ]
-[; ;main.c: 10: enum MODE_FSM mode;
-"12
-[v _addressEEPROMused `uc ~T0 @X0 1 e ]
-[i _addressEEPROMused
--> -> 0 `i `uc
-]
-[; ;main.c: 12: unsigned char addressEEPROMused = 0x00;
+[; ;main.c: 11: enum MODE_FSM mode;
 "13
-[v _TIME `uc ~T0 @X0 1 e ]
-[; ;main.c: 13: unsigned char TIME;
-"15
-[v _index `uc ~T0 @X0 1 e ]
-[i _index
+[v _MAX_COUNTER_AUTO_0 `ui ~T0 @X0 1 e ]
+[v _MAX_COUNTER_AUTO_1 `ui ~T0 @X0 1 e ]
+[; ;main.c: 13: unsigned int MAX_COUNTER_AUTO_0, MAX_COUNTER_AUTO_1;
+"14
+[v _addressEEPROM_AUTO_0 `uc ~T0 @X0 1 e ]
+[i _addressEEPROM_AUTO_0
 -> -> 0 `i `uc
 ]
-[; ;main.c: 15: unsigned char index = 0;
-"16
+[; ;main.c: 14: unsigned char addressEEPROM_AUTO_0 = 0x00;
+"15
+[v _addressEEPROM_AUTO_1 `uc ~T0 @X0 1 e ]
+[i _addressEEPROM_AUTO_1
+-> -> 1 `i `uc
+]
+[; ;main.c: 15: unsigned char addressEEPROM_AUTO_1 = 0x01;
+"18
 [v _pumpState `uc ~T0 @X0 1 e ]
 [i _pumpState
 -> -> 0 `i `uc
 ]
-[; ;main.c: 16: unsigned char pumpState = 0;
-"18
-[v _RUN_button_counter `uc ~T0 @X0 1 e ]
-[i _RUN_button_counter
--> -> 0 `i `uc
-]
-[; ;main.c: 18: unsigned char RUN_button_counter = 0;
+[; ;main.c: 18: unsigned char pumpState = 0;
 "19
+[v _brewing_counter `uc ~T0 @X0 1 e ]
 [v _cleaning_counter `uc ~T0 @X0 1 e ]
-[; ;main.c: 19: unsigned char cleaning_counter;
-[; ;main.c: 20: void InitSystem(void);
-[; ;main.c: 22: void Delay_ms(unsigned int delay);
-[; ;main.c: 24: void RelayOn(unsigned char flag);
-[; ;main.c: 26: unsigned char ReadEEPROM(unsigned char address);
-[; ;main.c: 27: void WriteEEPROM(unsigned char address, unsigned char data);
-[v F657 `(v ~T0 @X0 1 tf ]
-"29
-[v _timer1 `IF657 ~T0 @X0 1 e ]
+[; ;main.c: 19: unsigned char brewing_counter, cleaning_counter;
+[; ;main.c: 22: void InitSystem(void);
+[; ;main.c: 24: void Delay_ms(unsigned int delay);
+[; ;main.c: 26: void RelayOn(unsigned char flag);
+[; ;main.c: 28: unsigned char ReadEEPROM(unsigned char address);
+[; ;main.c: 29: void WriteEEPROM(unsigned char address, unsigned char data);
+[v F660 `(v ~T0 @X0 1 tf ]
+"31
+[v _ISR `IF660 ~T0 @X0 1 e ]
 {
-[; ;main.c: 29: void interrupt timer1(){
-[e :U _timer1 ]
+[; ;main.c: 31: void interrupt ISR(){
+[e :U _ISR ]
 [f ]
-[; ;main.c: 30: if(TMR1IF == 1 && TMR1IE == 1){
-"30
+[; ;main.c: 32: if(TMR1IF == 1 && TMR1IE == 1){
+"32
 [e $ ! && == -> _TMR1IF `i -> 1 `i == -> _TMR1IE `i -> 1 `i 53  ]
 {
-[; ;main.c: 31: stop_timer1();
-"31
-[e ( _stop_timer1 ..  ]
-[; ;main.c: 32: TMR1IF = 0;
-"32
-[e = _TMR1IF -> -> 0 `i `b ]
-[; ;main.c: 33: start_timer1();
+[; ;main.c: 33: stop_timer1();
 "33
-[e ( _start_timer1 ..  ]
-[; ;main.c: 34: timer1_isr();
+[e ( _stop_timer1 ..  ]
+[; ;main.c: 34: TMR1IF = 0;
 "34
-[e ( _timer1_isr ..  ]
-[; ;main.c: 35: button_reading();
+[e = _TMR1IF -> -> 0 `i `b ]
+[; ;main.c: 35: start_timer1();
 "35
-[e ( _button_reading ..  ]
-[; ;main.c: 36: if(index > 1) index = 0;
+[e ( _start_timer1 ..  ]
+[; ;main.c: 36: timer1_isr();
 "36
-[e $ ! > -> _index `i -> 1 `i 54  ]
-[e = _index -> -> 0 `i `uc ]
-[e :U 54 ]
-[; ;main.c: 37: UpdateLed(index++);
+[e ( _timer1_isr ..  ]
+[; ;main.c: 37: button_reading();
 "37
-[e ( _UpdateLed (1 ++ _index -> -> 1 `i `uc ]
+[e ( _button_reading ..  ]
 "38
 }
 [e :U 53 ]
 [; ;main.c: 38: }
-[; ;main.c: 39: }
-"39
+[; ;main.c: 40: if(INTCONbits.INTF == 1){
+"40
+[e $ ! == -> . . _INTCONbits 0 1 `i -> 1 `i 54  ]
+{
+[; ;main.c: 41: INTCONbits.INTF = 0;
+"41
+[e = . . _INTCONbits 0 1 -> -> 0 `i `uc ]
+[; ;main.c: 42: brewing_counter++;
+"42
+[e ++ _brewing_counter -> -> 1 `i `uc ]
+"43
+}
+[e :U 54 ]
+[; ;main.c: 43: }
+[; ;main.c: 44: }
+"44
 [e :UE 52 ]
 }
-"40
+"46
 [v _main `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 40: void main(void) {
+[; ;main.c: 46: void main(void) {
 [e :U _main ]
 [f ]
-[; ;main.c: 41: InitSystem();
-"41
+[; ;main.c: 47: InitSystem();
+"47
 [e ( _InitSystem ..  ]
-"42
-[v _counter `uc ~T0 @X0 1 a ]
-[; ;main.c: 42: unsigned char counter = 0;
-[e = _counter -> -> 0 `i `uc ]
-[; ;main.c: 44: while(1){
-"44
+[; ;main.c: 49: while(1){
+"49
 [e :U 57 ]
 {
-[; ;main.c: 46: switch(mode){
-"46
+[; ;main.c: 50: switch(mode){
+"50
 [e $U 60  ]
 {
-[; ;main.c: 47: case INIT:
-"47
+[; ;main.c: 51: case INIT:
+"51
 [e :U 61 ]
-[; ;main.c: 48: if(!is_button_pressed(2)) mode = ADJUSTING;
-"48
-[e $ ! ! != -> ( _is_button_pressed (1 -> -> 2 `i `uc `i -> -> -> 0 `i `uc `i 62  ]
-[e = _mode . `E633 1 ]
-[e :U 62 ]
-[; ;main.c: 49: break;
-"49
-[e $U 59  ]
-[; ;main.c: 50: case ADJUSTING:
-"50
-[e :U 63 ]
-[; ;main.c: 52: UpdateLedBuffer(TIME);
+[; ;main.c: 52: brewing_counter = 0;
 "52
-[e ( _UpdateLedBuffer (1 _TIME ]
-[; ;main.c: 53: RelayOn(0);
-"53
-[e ( _RelayOn (1 -> -> 0 `i `uc ]
-[; ;main.c: 54: if(is_button_held(0)){
+[e = _brewing_counter -> -> 0 `i `uc ]
+[; ;main.c: 54: if(is_button_pressed(0)){
 "54
-[e $ ! != -> ( _is_button_held (1 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 64  ]
+[e $ ! != -> ( _is_button_pressed (1 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 62  ]
 {
-[; ;main.c: 55: TIME++;
+[; ;main.c: 55: mode = BREWING_0;
 "55
-[e ++ _TIME -> -> 1 `i `uc ]
-[; ;main.c: 56: if(TIME < 0 || TIME > 99) TIME = 0;
+[e = _mode . `E633 3 ]
 "56
-[e $ ! || < -> _TIME `i -> 0 `i > -> _TIME `i -> 99 `i 65  ]
-[e = _TIME -> -> 0 `i `uc ]
-[e :U 65 ]
-[; ;main.c: 58: UpdateLedBuffer(TIME);
-"58
-[e ( _UpdateLedBuffer (1 _TIME ]
-[; ;main.c: 59: WriteEEPROM(addressEEPROMused, TIME);
-"59
-[e ( _WriteEEPROM (2 , _addressEEPROMused _TIME ]
-[; ;main.c: 60: Delay_ms(100);
-"60
-[e ( _Delay_ms (1 -> -> 100 `i `ui ]
-"61
 }
-[; ;main.c: 61: }
-[e $U 66  ]
-"62
-[e :U 64 ]
-[; ;main.c: 62: else if(is_button_held(1)){
-[e $ ! != -> ( _is_button_held (1 -> -> 1 `i `uc `i -> -> -> 0 `i `uc `i 67  ]
+[; ;main.c: 56: }
+[e $U 63  ]
+"57
+[e :U 62 ]
+[; ;main.c: 57: else if(is_button_pressed(1)){
+[e $ ! != -> ( _is_button_pressed (1 -> -> 1 `i `uc `i -> -> -> 0 `i `uc `i 64  ]
 {
-[; ;main.c: 63: TIME--;
-"63
-[e -- _TIME -> -> 1 `i `uc ]
-[; ;main.c: 64: if(TIME < 0 || TIME > 99) TIME = 0;
-"64
-[e $ ! || < -> _TIME `i -> 0 `i > -> _TIME `i -> 99 `i 68  ]
-[e = _TIME -> -> 0 `i `uc ]
-[e :U 68 ]
-[; ;main.c: 66: UpdateLedBuffer(TIME);
-"66
-[e ( _UpdateLedBuffer (1 _TIME ]
-[; ;main.c: 67: WriteEEPROM(addressEEPROMused, TIME);
-"67
-[e ( _WriteEEPROM (2 , _addressEEPROMused _TIME ]
-[; ;main.c: 68: Delay_ms(100);
-"68
-[e ( _Delay_ms (1 -> -> 100 `i `ui ]
-"69
+[; ;main.c: 58: mode = BREWING_1;
+"58
+[e = _mode . `E633 4 ]
+"59
 }
-[; ;main.c: 69: }
+[; ;main.c: 59: }
+[e $U 65  ]
+"60
+[e :U 64 ]
+[; ;main.c: 60: else if(is_button_pressed_s(0)){
+[e $ ! != -> ( _is_button_pressed_s (1 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 66  ]
+{
+[; ;main.c: 61: mode = ADJUSTING_AUTO_0;
+"61
+[e = _mode . `E633 1 ]
+"62
+}
+[; ;main.c: 62: }
+[e $U 67  ]
+"63
+[e :U 66 ]
+[; ;main.c: 63: else if(is_button_pressed_s(1)){
+[e $ ! != -> ( _is_button_pressed_s (1 -> -> 1 `i `uc `i -> -> -> 0 `i `uc `i 68  ]
+{
+[; ;main.c: 64: mode = ADJUSTING_AUTO_1;
+"64
+[e = _mode . `E633 2 ]
+"65
+}
+[; ;main.c: 65: }
 [e $U 69  ]
-"70
-[e :U 67 ]
-[; ;main.c: 70: else if(is_button_pressed(2)){
+"66
+[e :U 68 ]
+[; ;main.c: 66: else if(is_button_pressed(2)){
 [e $ ! != -> ( _is_button_pressed (1 -> -> 2 `i `uc `i -> -> -> 0 `i `uc `i 70  ]
 {
-[; ;main.c: 72: while(is_button_held(2)){
-"72
-[e $U 71  ]
-[e :U 72 ]
-{
-[; ;main.c: 73: if(is_button_pressed_s(2)){
-"73
-[e $ ! != -> ( _is_button_pressed_s (1 -> -> 2 `i `uc `i -> -> -> 0 `i `uc `i 74  ]
-{
-[; ;main.c: 74: pumpState = 0;
-"74
-[e = _pumpState -> -> 0 `i `uc ]
-[; ;main.c: 75: cleaning_counter = 10;
-"75
+[; ;main.c: 67: cleaning_counter = 10;
+"67
 [e = _cleaning_counter -> -> 10 `i `uc ]
-[; ;main.c: 76: mode = AUTO_CLEANING;
-"76
-[e = _mode . `E633 3 ]
-[; ;main.c: 77: break;
-"77
-[e $U 73  ]
-"78
-}
-[; ;main.c: 78: }
-[e $U 75  ]
-"79
-[e :U 74 ]
-[; ;main.c: 79: else {
-{
-[; ;main.c: 80: SetTimer1_ms(1000);
-"80
-[e ( _SetTimer1_ms (1 -> 1000 `i ]
-[; ;main.c: 81: counter = 0;
-"81
-[e = _counter -> -> 0 `i `uc ]
-[; ;main.c: 82: mode = AUTO_BREWING;
-"82
-[e = _mode . `E633 2 ]
-"83
-}
-[e :U 75 ]
-"84
-}
-[e :U 71 ]
-"72
-[e $ != -> ( _is_button_held (1 -> -> 2 `i `uc `i -> -> -> 0 `i `uc `i 72  ]
-[e :U 73 ]
-"85
+[; ;main.c: 68: mode = AUTO_CLEANING;
+"68
+[e = _mode . `E633 5 ]
+"69
 }
 [e :U 70 ]
-"86
+"70
 [e :U 69 ]
-[e :U 66 ]
-[; ;main.c: 83: }
-[; ;main.c: 84: }
-[; ;main.c: 85: }
-[; ;main.c: 86: break;
+[e :U 67 ]
+[e :U 65 ]
+[e :U 63 ]
+[; ;main.c: 69: }
+[; ;main.c: 70: break;
 [e $U 59  ]
-[; ;main.c: 87: case AUTO_BREWING:
-"87
-[e :U 76 ]
-[; ;main.c: 88: RelayOn(1);
-"88
-[e ( _RelayOn (1 -> -> 1 `i `uc ]
-[; ;main.c: 89: UpdateLedBuffer(counter);
-"89
-[e ( _UpdateLedBuffer (1 _counter ]
-[; ;main.c: 91: if(flag_timer1){
-"91
-[e $ ! != -> _flag_timer1 `i -> -> -> 0 `i `uc `i 77  ]
+[; ;main.c: 71: case ADJUSTING_AUTO_0:
+"71
+[e :U 71 ]
+[; ;main.c: 72: if(is_button_pressed(0)){
+"72
+[e $ ! != -> ( _is_button_pressed (1 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 72  ]
 {
-[; ;main.c: 92: counter++;
-"92
-[e ++ _counter -> -> 1 `i `uc ]
-[; ;main.c: 93: flag_timer1 = 0;
-"93
-[e = _flag_timer1 -> -> 0 `i `uc ]
-"94
-}
-[e :U 77 ]
-[; ;main.c: 94: }
-[; ;main.c: 95: if(counter >= TIME) mode = INIT;
-"95
-[e $ ! >= -> _counter `i -> _TIME `i 78  ]
+[; ;main.c: 73: MAX_COUNTER_AUTO_0 = brewing_counter;
+"73
+[e = _MAX_COUNTER_AUTO_0 -> _brewing_counter `ui ]
+[; ;main.c: 74: WriteEEPROM(addressEEPROM_AUTO_0, MAX_COUNTER_AUTO_0);
+"74
+[e ( _WriteEEPROM (2 , _addressEEPROM_AUTO_0 -> _MAX_COUNTER_AUTO_0 `uc ]
+[; ;main.c: 75: mode = INIT;
+"75
 [e = _mode . `E633 0 ]
+"76
+}
+[e :U 72 ]
+[; ;main.c: 76: }
+[; ;main.c: 77: break;
+"77
+[e $U 59  ]
+[; ;main.c: 78: case ADJUSTING_AUTO_1:
+"78
+[e :U 73 ]
+[; ;main.c: 79: if(is_button_pressed(1)){
+"79
+[e $ ! != -> ( _is_button_pressed (1 -> -> 1 `i `uc `i -> -> -> 0 `i `uc `i 74  ]
+{
+[; ;main.c: 80: MAX_COUNTER_AUTO_1 = brewing_counter;
+"80
+[e = _MAX_COUNTER_AUTO_1 -> _brewing_counter `ui ]
+[; ;main.c: 81: WriteEEPROM(addressEEPROM_AUTO_1, MAX_COUNTER_AUTO_1);
+"81
+[e ( _WriteEEPROM (2 , _addressEEPROM_AUTO_1 -> _MAX_COUNTER_AUTO_1 `uc ]
+[; ;main.c: 82: mode = INIT;
+"82
+[e = _mode . `E633 0 ]
+"83
+}
+[e :U 74 ]
+[; ;main.c: 83: }
+[; ;main.c: 84: break;
+"84
+[e $U 59  ]
+[; ;main.c: 85: case BREWING_0:
+"85
+[e :U 75 ]
+[; ;main.c: 86: PORTAbits.RA3 = 1;
+"86
+[e = . . _PORTAbits 0 3 -> -> 1 `i `uc ]
+[; ;main.c: 87: if(brewing_counter > MAX_COUNTER_AUTO_0) mode = INIT;
+"87
+[e $ ! > -> _brewing_counter `ui _MAX_COUNTER_AUTO_0 76  ]
+[e = _mode . `E633 0 ]
+[e :U 76 ]
+[; ;main.c: 88: if(is_button_pressed(0)) mode = INIT;
+"88
+[e $ ! != -> ( _is_button_pressed (1 -> -> 0 `i `uc `i -> -> -> 0 `i `uc `i 77  ]
+[e = _mode . `E633 0 ]
+[e :U 77 ]
+[; ;main.c: 90: break;
+"90
+[e $U 59  ]
+[; ;main.c: 91: case BREWING_1:
+"91
 [e :U 78 ]
-[; ;main.c: 96: if(is_button_pressed(2)) mode = INIT;
-"96
-[e $ ! != -> ( _is_button_pressed (1 -> -> 2 `i `uc `i -> -> -> 0 `i `uc `i 79  ]
+[; ;main.c: 92: PORTAbits.RA3 = 1;
+"92
+[e = . . _PORTAbits 0 3 -> -> 1 `i `uc ]
+[; ;main.c: 93: if(brewing_counter > MAX_COUNTER_AUTO_1) mode = INIT;
+"93
+[e $ ! > -> _brewing_counter `ui _MAX_COUNTER_AUTO_1 79  ]
 [e = _mode . `E633 0 ]
 [e :U 79 ]
-[; ;main.c: 97: break;
-"97
-[e $U 59  ]
-[; ;main.c: 98: case AUTO_CLEANING:
-"98
+[; ;main.c: 94: if(is_button_pressed(1)) mode = INIT;
+"94
+[e $ ! != -> ( _is_button_pressed (1 -> -> 1 `i `uc `i -> -> -> 0 `i `uc `i 80  ]
+[e = _mode . `E633 0 ]
 [e :U 80 ]
-[; ;main.c: 99: UpdateLedBuffer(cleaning_counter);
+[; ;main.c: 96: break;
+"96
+[e $U 59  ]
+[; ;main.c: 97: case AUTO_CLEANING:
+"97
+[e :U 81 ]
+[; ;main.c: 98: if(flag_timer1){
+"98
+[e $ ! != -> _flag_timer1 `i -> -> -> 0 `i `uc `i 82  ]
+{
+[; ;main.c: 99: if(PORTAbits.RA3 == 1){
 "99
-[e ( _UpdateLedBuffer (1 _cleaning_counter ]
-[; ;main.c: 100: if(flag_timer1){
+[e $ ! == -> . . _PORTAbits 0 3 `i -> 1 `i 83  ]
+{
+[; ;main.c: 100: SetTimer1_ms(10000);
 "100
-[e $ ! != -> _flag_timer1 `i -> -> -> 0 `i `uc `i 81  ]
-{
-[; ;main.c: 102: if(pumpState == 0){
-"102
-[e $ ! == -> _pumpState `i -> 0 `i 82  ]
-{
-[; ;main.c: 104: pumpState = 1;
-"104
-[e = _pumpState -> -> 1 `i `uc ]
-[; ;main.c: 106: RelayOn(1);
-"106
-[e ( _RelayOn (1 -> -> 1 `i `uc ]
-[; ;main.c: 107: SetTimer1_ms(10000);
-"107
 [e ( _SetTimer1_ms (1 -> 10000 `i ]
+[; ;main.c: 101: PORTAbits.RA3 = 0;
+"101
+[e = . . _PORTAbits 0 3 -> -> 0 `i `uc ]
+"102
+}
+[; ;main.c: 102: }
+[e $U 84  ]
+"103
+[e :U 83 ]
+[; ;main.c: 103: else {
+{
+[; ;main.c: 104: cleaning_counter--;
+"104
+[e -- _cleaning_counter -> -> 1 `i `uc ]
+[; ;main.c: 105: SetTimer1_ms(2000);
+"105
+[e ( _SetTimer1_ms (1 -> 2000 `i ]
+[; ;main.c: 106: PORTAbits.RA3 = 1;
+"106
+[e = . . _PORTAbits 0 3 -> -> 1 `i `uc ]
+"107
+}
+[e :U 84 ]
 "108
 }
-[; ;main.c: 108: }
-[e $U 83  ]
-"109
 [e :U 82 ]
-[; ;main.c: 109: else {
-{
-[; ;main.c: 111: pumpState = 0;
-"111
-[e = _pumpState -> -> 0 `i `uc ]
-[; ;main.c: 112: cleaning_counter--;
-"112
-[e -- _cleaning_counter -> -> 1 `i `uc ]
-[; ;main.c: 113: RelayOn(0);
-"113
-[e ( _RelayOn (1 -> -> 0 `i `uc ]
-[; ;main.c: 114: SetTimer1_ms(2000);
-"114
-[e ( _SetTimer1_ms (1 -> 2000 `i ]
-"115
-}
-[e :U 83 ]
-"116
-}
-[e :U 81 ]
-[; ;main.c: 115: }
-[; ;main.c: 116: }
-[; ;main.c: 117: if(cleaning_counter == 0) mode = INIT;
-"117
-[e $ ! == -> _cleaning_counter `i -> 0 `i 84  ]
-[e = _mode . `E633 0 ]
-[e :U 84 ]
-[; ;main.c: 118: if(is_button_pressed(2)) mode = INIT;
-"118
-[e $ ! != -> ( _is_button_pressed (1 -> -> 2 `i `uc `i -> -> -> 0 `i `uc `i 85  ]
+[; ;main.c: 107: }
+[; ;main.c: 108: }
+[; ;main.c: 109: if(cleaning_counter == 0) mode = INIT;
+"109
+[e $ ! == -> _cleaning_counter `i -> 0 `i 85  ]
 [e = _mode . `E633 0 ]
 [e :U 85 ]
-[; ;main.c: 119: break;
-"119
-[e $U 59  ]
-[; ;main.c: 120: default:
-"120
-[e :U 86 ]
-[; ;main.c: 121: break;
-"121
-[e $U 59  ]
-"122
+[; ;main.c: 110: if(is_button_pressed(2)){
+"110
+[e $ ! != -> ( _is_button_pressed (1 -> -> 2 `i `uc `i -> -> -> 0 `i `uc `i 86  ]
+{
+[; ;main.c: 111: mode = INIT;
+"111
+[e = _mode . `E633 0 ]
+"112
 }
-[; ;main.c: 122: }
+[e :U 86 ]
+[; ;main.c: 112: }
+[; ;main.c: 113: break;
+"113
 [e $U 59  ]
-"46
+[; ;main.c: 114: default:
+"114
+[e :U 87 ]
+[; ;main.c: 115: mode = INIT;
+"115
+[e = _mode . `E633 0 ]
+[; ;main.c: 116: break;
+"116
+[e $U 59  ]
+"117
+}
+[; ;main.c: 117: }
+[e $U 59  ]
+"50
 [e :U 60 ]
 [e [\ _mode , $ . `E633 0 61
- , $ . `E633 1 63
- , $ . `E633 2 76
- , $ . `E633 3 80
- 86 ]
-"122
+ , $ . `E633 1 71
+ , $ . `E633 2 73
+ , $ . `E633 3 75
+ , $ . `E633 4 78
+ , $ . `E633 5 81
+ 87 ]
+"117
 [e :U 59 ]
-[; ;main.c: 124: Delay_ms(3);
-"124
+[; ;main.c: 118: Delay_ms(3);
+"118
 [e ( _Delay_ms (1 -> -> 3 `i `ui ]
-"125
+"119
 }
 [e :U 56 ]
-"44
+"49
 [e $U 57  ]
 [e :U 58 ]
-[; ;main.c: 125: }
-[; ;main.c: 126: return;
-"126
+[; ;main.c: 119: }
+[; ;main.c: 120: return;
+"120
 [e $UE 55  ]
-[; ;main.c: 127: }
-"127
+[; ;main.c: 121: }
+"121
 [e :UE 55 ]
 }
-"129
+"123
 [v _InitSystem `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 129: void InitSystem(void){
+[; ;main.c: 123: void InitSystem(void){
 [e :U _InitSystem ]
 [f ]
-[; ;main.c: 130: CMCON = 0x07;
-"130
+[; ;main.c: 124: CMCON = 0x07;
+"124
 [e = _CMCON -> -> 7 `i `uc ]
-[; ;main.c: 132: TRISA = 0b00110100;
-"132
+[; ;main.c: 126: OPTION_REGbits.nRBPU = 0;
+"126
+[e = . . _OPTION_REGbits 0 5 -> -> 0 `i `uc ]
+[; ;main.c: 127: OPTION_REGbits.INTEDG = 1;
+"127
+[e = . . _OPTION_REGbits 0 4 -> -> 1 `i `uc ]
+[; ;main.c: 129: INTCONbits.INTE = 1;
+"129
+[e = . . _INTCONbits 0 4 -> -> 1 `i `uc ]
+[; ;main.c: 130: TRISA = 0b00110100;
+"130
 [e = _TRISA -> -> 52 `i `uc ]
-[; ;main.c: 133: TRISB = 0b00000000;
-"133
-[e = _TRISB -> -> 0 `i `uc ]
-[; ;main.c: 135: PORTA = 0xFF;
-"135
+[; ;main.c: 131: PORTA = 0xFF;
+"131
 [e = _PORTA -> -> 255 `i `uc ]
-[; ;main.c: 136: PORTB = 0xFF;
-"136
+[; ;main.c: 133: PORTB = 0b00000001;
+"133
+[e = _PORTB -> -> 1 `i `uc ]
+[; ;main.c: 134: PORTB = 0xFF;
+"134
 [e = _PORTB -> -> 255 `i `uc ]
-[; ;main.c: 138: cleaning_counter = 10;
-"138
+[; ;main.c: 135: brewing_counter = 0;
+"135
+[e = _brewing_counter -> -> 0 `i `uc ]
+[; ;main.c: 136: cleaning_counter = 10;
+"136
 [e = _cleaning_counter -> -> 10 `i `uc ]
-[; ;main.c: 139: mode = INIT;
-"139
+[; ;main.c: 138: mode = INIT;
+"138
 [e = _mode . `E633 0 ]
-[; ;main.c: 140: RelayOn(0);
+[; ;main.c: 140: MAX_COUNTER_AUTO_0 = ReadEEPROM(addressEEPROM_AUTO_0);
 "140
-[e ( _RelayOn (1 -> -> 0 `i `uc ]
-[; ;main.c: 142: init_timer1(10000);
+[e = _MAX_COUNTER_AUTO_0 -> ( _ReadEEPROM (1 _addressEEPROM_AUTO_0 `ui ]
+[; ;main.c: 141: MAX_COUNTER_AUTO_1 = ReadEEPROM(addressEEPROM_AUTO_1);
+"141
+[e = _MAX_COUNTER_AUTO_1 -> ( _ReadEEPROM (1 _addressEEPROM_AUTO_1 `ui ]
+[; ;main.c: 142: RelayOn(0);
 "142
+[e ( _RelayOn (1 -> -> 0 `i `uc ]
+[; ;main.c: 144: init_timer1(10000);
+"144
 [e ( _init_timer1 (1 -> -> 10000 `i `ui ]
-[; ;main.c: 143: SetTimer1_ms(1000);
-"143
-[e ( _SetTimer1_ms (1 -> 1000 `i ]
-[; ;main.c: 145: TIME = ReadEEPROM(addressEEPROMused);
+[; ;main.c: 145: SetTimer1_ms(1000);
 "145
-[e = _TIME ( _ReadEEPROM (1 _addressEEPROMused ]
-[; ;main.c: 146: if(TIME < 0 || TIME > 99) TIME = 0;
-"146
-[e $ ! || < -> _TIME `i -> 0 `i > -> _TIME `i -> 99 `i 88  ]
-[e = _TIME -> -> 0 `i `uc ]
-[e :U 88 ]
-[; ;main.c: 148: UpdateLedBuffer(TIME);
-"148
-[e ( _UpdateLedBuffer (1 _TIME ]
-[; ;main.c: 149: }
-"149
-[e :UE 87 ]
+[e ( _SetTimer1_ms (1 -> 1000 `i ]
+[; ;main.c: 147: }
+"147
+[e :UE 88 ]
 }
-"152
+"150
 [v _Delay_ms `(v ~T0 @X0 1 ef1`ui ]
 {
-[; ;main.c: 152: void Delay_ms(unsigned int delay){
+[; ;main.c: 150: void Delay_ms(unsigned int delay){
 [e :U _Delay_ms ]
 [v _delay `ui ~T0 @X0 1 r1 ]
 [f ]
-"153
+"151
 [v _i `ui ~T0 @X0 1 a ]
 [v _j `ui ~T0 @X0 1 a ]
-[; ;main.c: 153: unsigned int i, j;
-[; ;main.c: 154: for(i = 0; i < delay; i++){
-"154
+[; ;main.c: 151: unsigned int i, j;
+[; ;main.c: 152: for(i = 0; i < delay; i++){
+"152
 {
 [e = _i -> -> 0 `i `ui ]
 [e $U 93  ]
 [e :U 90 ]
 {
-[; ;main.c: 155: for(j = 0; j < 141; j++);
-"155
+[; ;main.c: 153: for(j = 0; j < 141; j++);
+"153
 {
 [e = _j -> -> 0 `i `ui ]
 [e $ < _j -> -> 141 `i `ui 94  ]
@@ -1143,105 +1143,105 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $ < _j -> -> 141 `i `ui 94  ]
 [e :U 95 ]
 }
-"156
-}
 "154
+}
+"152
 [e ++ _i -> -> 1 `i `ui ]
 [e :U 93 ]
 [e $ < _i _delay 90  ]
 [e :U 91 ]
-"156
+"154
 }
-[; ;main.c: 156: }
-[; ;main.c: 157: }
-"157
+[; ;main.c: 154: }
+[; ;main.c: 155: }
+"155
 [e :UE 89 ]
 }
-"159
+"157
 [v _RelayOn `(v ~T0 @X0 1 ef1`uc ]
 {
-[; ;main.c: 159: void RelayOn(unsigned char flag){
+[; ;main.c: 157: void RelayOn(unsigned char flag){
 [e :U _RelayOn ]
 [v _flag `uc ~T0 @X0 1 r1 ]
 [f ]
-[; ;main.c: 160: if(flag == 0) PORTAbits.RA3 = 0;
-"160
+[; ;main.c: 158: if(flag == 0) PORTAbits.RA3 = 0;
+"158
 [e $ ! == -> _flag `i -> 0 `i 98  ]
 [e = . . _PORTAbits 0 3 -> -> 0 `i `uc ]
 [e $U 99  ]
-"161
+"159
 [e :U 98 ]
-[; ;main.c: 161: else PORTAbits.RA3 = 1;
+[; ;main.c: 159: else PORTAbits.RA3 = 1;
 [e = . . _PORTAbits 0 3 -> -> 1 `i `uc ]
 [e :U 99 ]
-[; ;main.c: 162: }
-"162
+[; ;main.c: 160: }
+"160
 [e :UE 97 ]
 }
-"164
+"162
 [v _ReadEEPROM `(uc ~T0 @X0 1 ef1`uc ]
 {
-[; ;main.c: 164: unsigned char ReadEEPROM(unsigned char address){
+[; ;main.c: 162: unsigned char ReadEEPROM(unsigned char address){
 [e :U _ReadEEPROM ]
 [v _address `uc ~T0 @X0 1 r1 ]
 [f ]
-[; ;main.c: 165: EEADR = address;
-"165
+[; ;main.c: 163: EEADR = address;
+"163
 [e = _EEADR _address ]
-[; ;main.c: 166: EECON1bits.RD = 1;
-"166
+[; ;main.c: 164: EECON1bits.RD = 1;
+"164
 [e = . . _EECON1bits 0 0 -> -> 1 `i `uc ]
-[; ;main.c: 167: return EEDATA;
-"167
+[; ;main.c: 165: return EEDATA;
+"165
 [e ) _EEDATA ]
 [e $UE 100  ]
-[; ;main.c: 168: }
-"168
+[; ;main.c: 166: }
+"166
 [e :UE 100 ]
 }
-"169
+"167
 [v _WriteEEPROM `(v ~T0 @X0 1 ef2`uc`uc ]
 {
-[; ;main.c: 169: void WriteEEPROM(unsigned char address, unsigned char data){
+[; ;main.c: 167: void WriteEEPROM(unsigned char address, unsigned char data){
 [e :U _WriteEEPROM ]
 [v _address `uc ~T0 @X0 1 r1 ]
 [v _data `uc ~T0 @X0 1 r2 ]
 [f ]
-[; ;main.c: 170: EEADR = address;
-"170
+[; ;main.c: 168: EEADR = address;
+"168
 [e = _EEADR _address ]
-[; ;main.c: 171: EEDATA = data;
-"171
+[; ;main.c: 169: EEDATA = data;
+"169
 [e = _EEDATA _data ]
-[; ;main.c: 172: EECON1bits.WREN = 1;
-"172
+[; ;main.c: 170: EECON1bits.WREN = 1;
+"170
 [e = . . _EECON1bits 0 2 -> -> 1 `i `uc ]
-[; ;main.c: 173: INTCONbits.GIE = 0;
-"173
+[; ;main.c: 171: INTCONbits.GIE = 0;
+"171
 [e = . . _INTCONbits 0 7 -> -> 0 `i `uc ]
-[; ;main.c: 174: EECON2=0x55;
-"174
+[; ;main.c: 172: EECON2=0x55;
+"172
 [e = _EECON2 -> -> 85 `i `uc ]
-[; ;main.c: 175: EECON2=0xAA;
-"175
+[; ;main.c: 173: EECON2=0xAA;
+"173
 [e = _EECON2 -> -> 170 `i `uc ]
-[; ;main.c: 176: EECON1bits.WR = 1;
-"176
+[; ;main.c: 174: EECON1bits.WR = 1;
+"174
 [e = . . _EECON1bits 0 1 -> -> 1 `i `uc ]
-[; ;main.c: 177: INTCONbits.GIE = 1;
-"177
+[; ;main.c: 175: INTCONbits.GIE = 1;
+"175
 [e = . . _INTCONbits 0 7 -> -> 1 `i `uc ]
-[; ;main.c: 179: while(PIR1bits.EEIF == 0);
-"179
+[; ;main.c: 177: while(PIR1bits.EEIF == 0);
+"177
 [e $U 102  ]
 [e :U 103 ]
 [e :U 102 ]
 [e $ == -> . . _PIR1bits 0 7 `i -> 0 `i 103  ]
 [e :U 104 ]
-[; ;main.c: 180: PIR1bits.EEIF = 0;
-"180
+[; ;main.c: 178: PIR1bits.EEIF = 0;
+"178
 [e = . . _PIR1bits 0 7 -> -> 0 `i `uc ]
-[; ;main.c: 181: }
-"181
+[; ;main.c: 179: }
+"179
 [e :UE 101 ]
 }

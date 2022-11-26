@@ -579,21 +579,21 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;timer.h: 22: void stop_timer1(void);
 [; ;timer.h: 23: void timer1_isr(void);
 [; ;timer.h: 25: void SetTimer1_ms(int time);
-"33 main.h
+"30 main.h
 [p x FOSC=INTOSCIO ]
-"34
+"31
 [p x WDTE=OFF ]
-"35
+"32
 [p x PWRTE=OFF ]
-"36
+"33
 [p x MCLRE=OFF ]
-"37
+"34
 [p x BOREN=OFF ]
-"38
+"35
 [p x LVP=OFF ]
-"39
+"36
 [p x CPD=OFF ]
-"40
+"37
 [p x CP=OFF ]
 [; ;button.h: 21: void InitButtonReading();
 [; ;button.h: 22: void button_reading(void);
@@ -627,156 +627,162 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _debounceButtonBuffer2 `uc ~T0 @X0 -> 3 `i s ]
 [; ;button.c: 10: static unsigned char debounceButtonBuffer2[3];
 "12
-[v _flagForButtonPress_s `uc ~T0 @X0 -> 3 `i s ]
-[; ;button.c: 12: static unsigned char flagForButtonPress_s[3];
+[v _flagForButtonPress `uc ~T0 @X0 -> 3 `i s ]
+[; ;button.c: 12: static unsigned char flagForButtonPress[3];
 "13
+[v _flagForButtonPress_s `uc ~T0 @X0 -> 3 `i s ]
+[; ;button.c: 13: static unsigned char flagForButtonPress_s[3];
+"14
 [v _counterForButtonPress `ui ~T0 @X0 -> 3 `i s ]
-[; ;button.c: 13: static unsigned int counterForButtonPress[3];
-"15
+[; ;button.c: 14: static unsigned int counterForButtonPress[3];
+"16
 [v _button_reading `(v ~T0 @X0 1 ef ]
 {
-[; ;button.c: 15: void button_reading(void){
+[; ;button.c: 16: void button_reading(void){
 [e :U _button_reading ]
 [f ]
-"16
-[v _i `uc ~T0 @X0 1 a ]
-[; ;button.c: 16: unsigned char i;
-[; ;button.c: 17: for(i = 0; i < 3; i++){
 "17
+[v _i `uc ~T0 @X0 1 a ]
+[; ;button.c: 17: unsigned char i;
+[; ;button.c: 18: for(i = 0; i < 3; i++){
+"18
 {
 [e = _i -> -> 0 `i `uc ]
 [e $ < -> _i `i -> 3 `i 53  ]
 [e $U 54  ]
 [e :U 53 ]
 {
-[; ;button.c: 18: debounceButtonBuffer2[i] = debounceButtonBuffer1[i];
-"18
-[e = *U + &U _debounceButtonBuffer2 * -> _i `ux -> -> # *U &U _debounceButtonBuffer2 `ui `ux *U + &U _debounceButtonBuffer1 * -> _i `ux -> -> # *U &U _debounceButtonBuffer1 `ui `ux ]
-[; ;button.c: 19: debounceButtonBuffer1[i] = PORTA & buttonInputMask[i];
+[; ;button.c: 19: debounceButtonBuffer2[i] = debounceButtonBuffer1[i];
 "19
+[e = *U + &U _debounceButtonBuffer2 * -> _i `ux -> -> # *U &U _debounceButtonBuffer2 `ui `ux *U + &U _debounceButtonBuffer1 * -> _i `ux -> -> # *U &U _debounceButtonBuffer1 `ui `ux ]
+[; ;button.c: 20: debounceButtonBuffer1[i] = PORTA & buttonInputMask[i];
+"20
 [e = *U + &U _debounceButtonBuffer1 * -> _i `ux -> -> # *U &U _debounceButtonBuffer1 `ui `ux -> & -> _PORTA `i -> *U + &U _buttonInputMask * -> _i `ux -> -> # *U &U _buttonInputMask `ui `ux `i `uc ]
-[; ;button.c: 21: if(debounceButtonBuffer1[i] == debounceButtonBuffer2[i]){
-"21
+[; ;button.c: 22: if(debounceButtonBuffer1[i] == debounceButtonBuffer2[i]){
+"22
 [e $ ! == -> *U + &U _debounceButtonBuffer1 * -> _i `ux -> -> # *U &U _debounceButtonBuffer1 `ui `ux `i -> *U + &U _debounceButtonBuffer2 * -> _i `ux -> -> # *U &U _debounceButtonBuffer2 `ui `ux `i 56  ]
 {
-[; ;button.c: 22: buttonBuffer[i] = debounceButtonBuffer1[i];
-"22
-[e = *U + &U _buttonBuffer * -> _i `ux -> -> # *U &U _buttonBuffer `ui `ux *U + &U _debounceButtonBuffer1 * -> _i `ux -> -> # *U &U _debounceButtonBuffer1 `ui `ux ]
-[; ;button.c: 23: if(buttonBuffer[i] == 0){
+[; ;button.c: 23: buttonBuffer[i] = debounceButtonBuffer1[i];
 "23
+[e = *U + &U _buttonBuffer * -> _i `ux -> -> # *U &U _buttonBuffer `ui `ux *U + &U _debounceButtonBuffer1 * -> _i `ux -> -> # *U &U _debounceButtonBuffer1 `ui `ux ]
+[; ;button.c: 24: if(buttonBuffer[i] == 0){
+"24
 [e $ ! == -> *U + &U _buttonBuffer * -> _i `ux -> -> # *U &U _buttonBuffer `ui `ux `i -> 0 `i 57  ]
 {
-[; ;button.c: 24: if(counterForButtonPress[i] < 200){
-"24
+[; ;button.c: 25: if(counterForButtonPress[i] < 200){
+"25
 [e $ ! < *U + &U _counterForButtonPress * -> _i `ux -> -> # *U &U _counterForButtonPress `ui `ux -> -> 200 `i `ui 58  ]
 {
-[; ;button.c: 25: counterForButtonPress[i]++;
-"25
-[e ++ *U + &U _counterForButtonPress * -> _i `ux -> -> # *U &U _counterForButtonPress `ui `ux -> -> 1 `i `ui ]
+[; ;button.c: 26: counterForButtonPress[i]++;
 "26
-}
-[; ;button.c: 26: }
-[e $U 59  ]
+[e ++ *U + &U _counterForButtonPress * -> _i `ux -> -> # *U &U _counterForButtonPress `ui `ux -> -> 1 `i `ui ]
 "27
+}
+[; ;button.c: 27: }
+[e $U 59  ]
+"28
 [e :U 58 ]
-[; ;button.c: 27: else flagForButtonPress_s[i] = 1;
+[; ;button.c: 28: else flagForButtonPress_s[i] = 1;
 [e = *U + &U _flagForButtonPress_s * -> _i `ux -> -> # *U &U _flagForButtonPress_s `ui `ux -> -> 1 `i `uc ]
 [e :U 59 ]
-"28
-}
-[; ;button.c: 28: }
-[e $U 60  ]
 "29
-[e :U 57 ]
-[; ;button.c: 29: else{
-{
-[; ;button.c: 30: counterForButtonPress[i] = 0;
+}
+[; ;button.c: 29: }
+[e $U 60  ]
 "30
-[e = *U + &U _counterForButtonPress * -> _i `ux -> -> # *U &U _counterForButtonPress `ui `ux -> -> 0 `i `ui ]
-[; ;button.c: 31: flagForButtonPress_s[i] = 0;
-"31
-[e = *U + &U _flagForButtonPress_s * -> _i `ux -> -> # *U &U _flagForButtonPress_s `ui `ux -> -> 0 `i `uc ]
+[e :U 57 ]
+[; ;button.c: 30: else{
+{
+[; ;button.c: 32: flagForButtonPress[i] = counterForButtonPress[i];
 "32
+[e = *U + &U _flagForButtonPress * -> _i `ux -> -> # *U &U _flagForButtonPress `ui `ux -> *U + &U _counterForButtonPress * -> _i `ux -> -> # *U &U _counterForButtonPress `ui `ux `uc ]
+[; ;button.c: 33: counterForButtonPress[i] = 0;
+"33
+[e = *U + &U _counterForButtonPress * -> _i `ux -> -> # *U &U _counterForButtonPress `ui `ux -> -> 0 `i `ui ]
+[; ;button.c: 34: flagForButtonPress_s[i] = 0;
+"34
+[e = *U + &U _flagForButtonPress_s * -> _i `ux -> -> # *U &U _flagForButtonPress_s `ui `ux -> -> 0 `i `uc ]
+"35
 }
 [e :U 60 ]
-"33
+"36
 }
 [e :U 56 ]
-"34
+"37
 }
-"17
+"18
 [e ++ _i -> -> 1 `i `uc ]
 [e $ < -> _i `i -> 3 `i 53  ]
 [e :U 54 ]
-"34
+"37
 }
-[; ;button.c: 32: }
-[; ;button.c: 33: }
-[; ;button.c: 34: }
 [; ;button.c: 35: }
-"35
+[; ;button.c: 36: }
+[; ;button.c: 37: }
+[; ;button.c: 38: }
+"38
 [e :UE 52 ]
 }
-"38
+"41
 [v _is_button_held `(uc ~T0 @X0 1 ef1`uc ]
 {
-[; ;button.c: 38: unsigned char is_button_held(unsigned char index){
+[; ;button.c: 41: unsigned char is_button_held(unsigned char index){
 [e :U _is_button_held ]
 [v _index `uc ~T0 @X0 1 r1 ]
 [f ]
-[; ;button.c: 39: if(index >= 3) return 0;
-"39
+[; ;button.c: 42: if(index >= 3) return 0;
+"42
 [e $ ! >= -> _index `i -> 3 `i 62  ]
 [e ) -> -> 0 `i `uc ]
 [e $UE 61  ]
 [e :U 62 ]
-[; ;button.c: 41: return counterForButtonPress[index] > 0;
-"41
-[e ) -> -> > *U + &U _counterForButtonPress * -> _index `ux -> -> # *U &U _counterForButtonPress `ui `ux -> -> 0 `i `ui `i `uc ]
+[; ;button.c: 44: return counterForButtonPress[index];
+"44
+[e ) -> *U + &U _counterForButtonPress * -> _index `ux -> -> # *U &U _counterForButtonPress `ui `ux `uc ]
 [e $UE 61  ]
-[; ;button.c: 42: }
-"42
+[; ;button.c: 45: }
+"45
 [e :UE 61 ]
 }
-"44
+"47
 [v _is_button_pressed `(uc ~T0 @X0 1 ef1`uc ]
 {
-[; ;button.c: 44: unsigned char is_button_pressed(unsigned char index){
+[; ;button.c: 47: unsigned char is_button_pressed(unsigned char index){
 [e :U _is_button_pressed ]
 [v _index `uc ~T0 @X0 1 r1 ]
 [f ]
-[; ;button.c: 45: if(index >= 3) return 0;
-"45
+[; ;button.c: 48: if(index >= 3) return 0;
+"48
 [e $ ! >= -> _index `i -> 3 `i 64  ]
 [e ) -> -> 0 `i `uc ]
 [e $UE 63  ]
 [e :U 64 ]
-[; ;button.c: 47: return counterForButtonPress[index] == 1;
-"47
-[e ) -> -> == *U + &U _counterForButtonPress * -> _index `ux -> -> # *U &U _counterForButtonPress `ui `ux -> -> 1 `i `ui `i `uc ]
+[; ;button.c: 50: return flagForButtonPress[index];
+"50
+[e ) *U + &U _flagForButtonPress * -> _index `ux -> -> # *U &U _flagForButtonPress `ui `ux ]
 [e $UE 63  ]
-[; ;button.c: 48: }
-"48
+[; ;button.c: 51: }
+"51
 [e :UE 63 ]
 }
-"49
+"52
 [v _is_button_pressed_s `(uc ~T0 @X0 1 ef1`uc ]
 {
-[; ;button.c: 49: unsigned char is_button_pressed_s(unsigned char index){
+[; ;button.c: 52: unsigned char is_button_pressed_s(unsigned char index){
 [e :U _is_button_pressed_s ]
 [v _index `uc ~T0 @X0 1 r1 ]
 [f ]
-[; ;button.c: 50: if(index >= 3) return 0xFF;
-"50
+[; ;button.c: 53: if(index >= 3) return 0xFF;
+"53
 [e $ ! >= -> _index `i -> 3 `i 66  ]
 [e ) -> -> 255 `i `uc ]
 [e $UE 65  ]
 [e :U 66 ]
-[; ;button.c: 51: return flagForButtonPress_s[index];
-"51
+[; ;button.c: 54: return flagForButtonPress_s[index];
+"54
 [e ) *U + &U _flagForButtonPress_s * -> _index `ux -> -> # *U &U _flagForButtonPress_s `ui `ux ]
 [e $UE 65  ]
-[; ;button.c: 53: }
-"53
+[; ;button.c: 56: }
+"56
 [e :UE 65 ]
 }

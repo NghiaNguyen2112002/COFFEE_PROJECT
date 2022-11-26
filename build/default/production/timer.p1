@@ -588,31 +588,31 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic.h: 186: extern unsigned char __resetbits;
 [; ;pic.h: 187: extern __bit __powerdown;
 [; ;pic.h: 188: extern __bit __timeout;
-[; ;led7seg.h: 17: void Display(unsigned char number);
-[; ;led7seg.h: 18: void LedEnable(unsigned char index);
-[; ;led7seg.h: 19: void UpdateLedBuffer(unsigned char time);
-[; ;led7seg.h: 20: void UpdateLed(unsigned char index);
 [; ;button.h: 21: void InitButtonReading();
 [; ;button.h: 22: void button_reading(void);
 [; ;button.h: 24: unsigned char is_button_held(unsigned char index);
 [; ;button.h: 25: unsigned char is_button_pressed(unsigned char index);
 [; ;button.h: 26: unsigned char is_button_pressed_s(unsigned char index);
-"33 main.h
+"30 main.h
 [p x FOSC=INTOSCIO ]
-"34
+"31
 [p x WDTE=OFF ]
-"35
+"32
 [p x PWRTE=OFF ]
-"36
+"33
 [p x MCLRE=OFF ]
-"37
+"34
 [p x BOREN=OFF ]
-"38
+"35
 [p x LVP=OFF ]
-"39
+"36
 [p x CPD=OFF ]
-"40
+"37
 [p x CP=OFF ]
+[; ;led7seg.h: 17: void Display(unsigned char number);
+[; ;led7seg.h: 18: void LedEnable(unsigned char index);
+[; ;led7seg.h: 19: void UpdateLedBuffer(unsigned char time);
+[; ;led7seg.h: 20: void UpdateLed(unsigned char index);
 [; ;timer.h: 15: extern unsigned char flag_timer1;
 [; ;timer.h: 18: void init_timer1(unsigned int count);
 [; ;timer.h: 20: void start_timer1(void);

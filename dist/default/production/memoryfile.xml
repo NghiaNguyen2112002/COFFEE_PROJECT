@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <executable name="dist/default/production\pic16_timer_CF.X.production.hex">
+  <executable name="dist/default/production\water_flow_sensor.X.production.hex">
     <memory name="program">
       <units>words</units>
       <length>2048</length>
-      <used>1010</used>
-      <free>1038</free>
+      <used>759</used>
+      <free>1289</free>
     </memory>
     <memory name="data">
       <units>bytes</units>
       <length>224</length>
-      <used>75</used>
-      <free>149</free>
+      <used>70</used>
+      <free>154</free>
     </memory>
   </executable>
 </project>

@@ -845,7 +845,7 @@ unsigned char is_button_pressed(unsigned char index);
 unsigned char is_button_pressed_s(unsigned char index);
 
 
-# 33 "main.h"
+# 30 "main.h"
 #pragma config FOSC = INTOSCIO
 #pragma config WDTE = OFF
 #pragma config PWRTE = OFF
@@ -856,17 +856,19 @@ unsigned char is_button_pressed_s(unsigned char index);
 #pragma config CP = OFF
 
 # 9 "main.c"
-enum MODE_FSM {INIT, ADJUSTING, AUTO_BREWING, AUTO_CLEANING};
+enum MODE_FSM {INIT, ADJUSTING_AUTO_0, ADJUSTING_AUTO_1,
+BREWING_0, BREWING_1, AUTO_CLEANING};
 enum MODE_FSM mode;
 
-unsigned char addressEEPROMused = 0x00;
-unsigned char TIME;
+unsigned int MAX_COUNTER_AUTO_0, MAX_COUNTER_AUTO_1;
+unsigned char addressEEPROM_AUTO_0 = 0x00;
+unsigned char addressEEPROM_AUTO_1 = 0x01;
 
-unsigned char index = 0;
+
 unsigned char pumpState = 0;
+unsigned char brewing_counter, cleaning_counter;
 
-unsigned char RUN_button_counter = 0;
-unsigned char cleaning_counter;
+
 void InitSystem(void);
 
 void Delay_ms(unsigned int delay);
@@ -876,101 +878,93 @@ void RelayOn(unsigned char flag);
 unsigned char ReadEEPROM(unsigned char address);
 void WriteEEPROM(unsigned char address, unsigned char data);
 
-void interrupt timer1(){
+void interrupt ISR(){
 if(TMR1IF == 1 && TMR1IE == 1){
 stop_timer1();
 TMR1IF = 0;
 start_timer1();
 timer1_isr();
 button_reading();
-if(index > 1) index = 0;
-UpdateLed(index++);
+}
+
+if(INTCONbits.INTF == 1){
+INTCONbits.INTF = 0;
+brewing_counter++;
 }
 }
+
 void main(void) {
 InitSystem();
-unsigned char counter = 0;
 
 while(1){
-
 switch(mode){
 case INIT:
-if(!is_button_pressed(2)) mode = ADJUSTING;
-break;
-case ADJUSTING:
+brewing_counter = 0;
 
-UpdateLedBuffer(TIME);
-RelayOn(0);
-if(is_button_held(0)){
-TIME++;
-if(TIME < 0 || TIME > 99) TIME = 0;
-
-UpdateLedBuffer(TIME);
-WriteEEPROM(addressEEPROMused, TIME);
-Delay_ms(100);
+if(is_button_pressed(0)){
+mode = BREWING_0;
 }
-else if(is_button_held(1)){
-TIME--;
-if(TIME < 0 || TIME > 99) TIME = 0;
-
-UpdateLedBuffer(TIME);
-WriteEEPROM(addressEEPROMused, TIME);
-Delay_ms(100);
+else if(is_button_pressed(1)){
+mode = BREWING_1;
+}
+else if(is_button_pressed_s(0)){
+mode = ADJUSTING_AUTO_0;
+}
+else if(is_button_pressed_s(1)){
+mode = ADJUSTING_AUTO_1;
 }
 else if(is_button_pressed(2)){
-
-while(is_button_held(2)){
-if(is_button_pressed_s(2)){
-pumpState = 0;
 cleaning_counter = 10;
 mode = AUTO_CLEANING;
-break;
-}
-else {
-SetTimer1_ms(1000);
-counter = 0;
-mode = AUTO_BREWING;
-}
-}
 }
 break;
-case AUTO_BREWING:
-RelayOn(1);
-UpdateLedBuffer(counter);
+case ADJUSTING_AUTO_0:
+if(is_button_pressed(0)){
+MAX_COUNTER_AUTO_0 = brewing_counter;
+WriteEEPROM(addressEEPROM_AUTO_0, MAX_COUNTER_AUTO_0);
+mode = INIT;
+}
+break;
+case ADJUSTING_AUTO_1:
+if(is_button_pressed(1)){
+MAX_COUNTER_AUTO_1 = brewing_counter;
+WriteEEPROM(addressEEPROM_AUTO_1, MAX_COUNTER_AUTO_1);
+mode = INIT;
+}
+break;
+case BREWING_0:
+PORTAbits.RA3 = 1;
+if(brewing_counter > MAX_COUNTER_AUTO_0) mode = INIT;
+if(is_button_pressed(0)) mode = INIT;
 
-if(flag_timer1){
-counter++;
-flag_timer1 = 0;
-}
-if(counter >= TIME) mode = INIT;
-if(is_button_pressed(2)) mode = INIT;
+break;
+case BREWING_1:
+PORTAbits.RA3 = 1;
+if(brewing_counter > MAX_COUNTER_AUTO_1) mode = INIT;
+if(is_button_pressed(1)) mode = INIT;
+
 break;
 case AUTO_CLEANING:
-UpdateLedBuffer(cleaning_counter);
 if(flag_timer1){
-
-if(pumpState == 0){
-
-pumpState = 1;
-
-RelayOn(1);
+if(PORTAbits.RA3 == 1){
 SetTimer1_ms(10000);
+PORTAbits.RA3 = 0;
 }
 else {
-
-pumpState = 0;
 cleaning_counter--;
-RelayOn(0);
 SetTimer1_ms(2000);
+PORTAbits.RA3 = 1;
 }
 }
 if(cleaning_counter == 0) mode = INIT;
-if(is_button_pressed(2)) mode = INIT;
+if(is_button_pressed(2)){
+mode = INIT;
+}
 break;
 default:
+mode = INIT;
 break;
 }
-
 Delay_ms(3);
 }
 return;
@@ -979,23 +973,27 @@ return;
 void InitSystem(void){
 CMCON = 0x07;
 
+OPTION_REGbits.nRBPU = 0;
+OPTION_REGbits.INTEDG = 1;
+
+INTCONbits.INTE = 1;
 TRISA = 0b00110100;
-TRISB = 0b00000000;
-
 PORTA = 0xFF;
-PORTB = 0xFF;
 
+PORTB = 0b00000001;
+PORTB = 0xFF;
+brewing_counter = 0;
 cleaning_counter = 10;
+
 mode = INIT;
+
+MAX_COUNTER_AUTO_0 = ReadEEPROM(addressEEPROM_AUTO_0);
+MAX_COUNTER_AUTO_1 = ReadEEPROM(addressEEPROM_AUTO_1);
 RelayOn(0);
 
 init_timer1(10000);
 SetTimer1_ms(1000);
 
-TIME = ReadEEPROM(addressEEPROMused);
-if(TIME < 0 || TIME > 99) TIME = 0;
-
-UpdateLedBuffer(TIME);
 }
 
 

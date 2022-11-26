@@ -837,7 +837,7 @@ void timer1_isr(void);
 void SetTimer1_ms(int time);
 
 
-# 33 "main.h"
+# 30 "main.h"
 #pragma config FOSC = INTOSCIO
 #pragma config WDTE = OFF
 #pragma config PWRTE = OFF
@@ -863,6 +863,7 @@ static unsigned char buttonBuffer[3] = {1, 1, 1};
 static unsigned char debounceButtonBuffer1[3];
 static unsigned char debounceButtonBuffer2[3];
 
+static unsigned char flagForButtonPress[3];
 static unsigned char flagForButtonPress_s[3];
 static unsigned int counterForButtonPress[3];
 
@@ -881,6 +882,8 @@ counterForButtonPress[i]++;
 else flagForButtonPress_s[i] = 1;
 }
 else{
+
+flagForButtonPress[i] = counterForButtonPress[i];
 counterForButtonPress[i] = 0;
 flagForButtonPress_s[i] = 0;
 }
@@ -892,13 +895,13 @@ flagForButtonPress_s[i] = 0;
 unsigned char is_button_held(unsigned char index){
 if(index >= 3) return 0;
 
-return counterForButtonPress[index] > 0;
+return counterForButtonPress[index];
 }
 
 unsigned char is_button_pressed(unsigned char index){
 if(index >= 3) return 0;
 
-return counterForButtonPress[index] == 1;
+return flagForButtonPress[index];
 }
 unsigned char is_button_pressed_s(unsigned char index){
 if(index >= 3) return 0xFF;

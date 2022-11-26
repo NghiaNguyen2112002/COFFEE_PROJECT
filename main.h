@@ -17,16 +17,14 @@
 
 #define     CLEANING_TIMES      10      //10 times
 
-#define     UP                  0
-#define     DOWN                1
-#define     RUN                 2
+#define     MAX_COUNTER_PULSE           0xFFFF
+#define     AUTO_0_BUTTON              0
+#define     AUTO_1_BUTTON              1
+#define     AUTO_CLEANING_BUTTON       2
 
 #define     MAX_BUTTON          3
 #define     TRIS_BUTTON         TRISA
 #define     PORT_BUTTON         PORTA
-
-#define     TRIS_LED            TRISB
-#define     PORT_LED            PORTB
 
 #define     BIT_RELAY           PORTAbits.RA3
 #pragma config FOSC = INTOSCIO  // Oscillator Selection bits (INTOSC oscillator: I/O function on RA6/OSC2/CLKOUT pin, I/O function on RA7/OSC1/CLKIN)

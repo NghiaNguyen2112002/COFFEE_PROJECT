@@ -817,12 +817,6 @@ extern unsigned char __resetbits;
 extern __bit __powerdown;
 extern __bit __timeout;
 
-# 17 "led7seg.h"
-void Display(unsigned char number);
-void LedEnable(unsigned char index);
-void UpdateLedBuffer(unsigned char time);
-void UpdateLed(unsigned char index);
-
 # 21 "button.h"
 void InitButtonReading();
 void button_reading(void);
@@ -832,7 +826,7 @@ unsigned char is_button_pressed(unsigned char index);
 unsigned char is_button_pressed_s(unsigned char index);
 
 
-# 33 "main.h"
+# 30 "main.h"
 #pragma config FOSC = INTOSCIO
 #pragma config WDTE = OFF
 #pragma config PWRTE = OFF
@@ -841,6 +835,12 @@ unsigned char is_button_pressed_s(unsigned char index);
 #pragma config LVP = OFF
 #pragma config CPD = OFF
 #pragma config CP = OFF
+
+# 17 "led7seg.h"
+void Display(unsigned char number);
+void LedEnable(unsigned char index);
+void UpdateLedBuffer(unsigned char time);
+void UpdateLed(unsigned char index);
 
 # 15 "timer.h"
 extern unsigned char flag_timer1;

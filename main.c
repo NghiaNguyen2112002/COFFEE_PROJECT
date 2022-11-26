@@ -6,17 +6,19 @@
  */
 #include "main.h"
 
-enum MODE_FSM {INIT, ADJUSTING, AUTO_BREWING, AUTO_CLEANING};
+enum MODE_FSM {INIT, ADJUSTING_AUTO_0, ADJUSTING_AUTO_1, 
+                BREWING_0, BREWING_1, AUTO_CLEANING};
 enum MODE_FSM mode;
 
-unsigned char   addressEEPROMused = 0x00;
-unsigned char   TIME;
+unsigned int    MAX_COUNTER_AUTO_0, MAX_COUNTER_AUTO_1;
+unsigned char   addressEEPROM_AUTO_0 = 0x00;
+unsigned char   addressEEPROM_AUTO_1 = 0x01;
 
-unsigned char   index = 0;
+
 unsigned char   pumpState = 0;          //0: turn off,  1: turn on
+unsigned char   brewing_counter, cleaning_counter;
 
-unsigned char   RUN_button_counter = 0;
-unsigned char   cleaning_counter;
+
 void InitSystem(void);
 
 void Delay_ms(unsigned int delay);
@@ -26,101 +28,93 @@ void RelayOn(unsigned char flag);
 unsigned char ReadEEPROM(unsigned char address);
 void WriteEEPROM(unsigned char address, unsigned char data);
 
-void interrupt timer1(){
+void interrupt ISR(){
     if(TMR1IF == 1 && TMR1IE == 1){
         stop_timer1();
         TMR1IF = 0; 
         start_timer1();
         timer1_isr();
         button_reading();
-        if(index > 1) index = 0;
-        UpdateLed(index++);
+    }
+    
+    if(INTCONbits.INTF == 1){
+        INTCONbits.INTF = 0;
+        brewing_counter++;
     }
 }
+
 void main(void) {
     InitSystem();
-    unsigned char counter = 0;
 
     while(1){
-
         switch(mode){
-        case INIT:
-            if(!is_button_pressed(RUN)) mode = ADJUSTING;
-        break;
-        case ADJUSTING:
-            //ADJUST TIME
-            UpdateLedBuffer(TIME);
-            RelayOn(0);
-            if(is_button_held(UP)){
-                TIME++;
-                if(TIME < 0 || TIME > 99) TIME = 0;
+            case INIT:
+                brewing_counter = 0;
 
-                UpdateLedBuffer(TIME);
-                WriteEEPROM(addressEEPROMused, TIME);
-                Delay_ms(100);
-            }
-            else if(is_button_held(DOWN)){               
-                TIME--;
-                if(TIME < 0 || TIME > 99) TIME = 0;
-
-                UpdateLedBuffer(TIME);
-                WriteEEPROM(addressEEPROMused, TIME);
-                Delay_ms(100);
-            }
-            else if(is_button_pressed(RUN)){
-                //buton still pressed
-                while(is_button_held(RUN)){
-                    if(is_button_pressed_s(RUN)){
-                        pumpState = 0;
-                        cleaning_counter = CLEANING_TIMES;
-                        mode = AUTO_CLEANING;   
-                        break;
+                if(is_button_pressed(AUTO_0_BUTTON)){
+                    mode = BREWING_0;
+                }
+                else if(is_button_pressed(AUTO_1_BUTTON)){
+                    mode = BREWING_1;
+                }
+                else if(is_button_pressed_s(AUTO_0_BUTTON)){
+                    mode = ADJUSTING_AUTO_0;
+                }
+                else if(is_button_pressed_s(AUTO_1_BUTTON)){
+                    mode = ADJUSTING_AUTO_1;
+                }
+                else if(is_button_pressed(AUTO_CLEANING_BUTTON)){
+                    cleaning_counter = CLEANING_TIMES;
+                    mode = AUTO_CLEANING;
+                }
+                break;
+            case ADJUSTING_AUTO_0:
+                if(is_button_pressed(AUTO_0_BUTTON)){
+                    MAX_COUNTER_AUTO_0 = brewing_counter;
+                    WriteEEPROM(addressEEPROM_AUTO_0, MAX_COUNTER_AUTO_0);
+                    mode = INIT;
+                }
+                break;
+            case ADJUSTING_AUTO_1:
+                if(is_button_pressed(AUTO_1_BUTTON)){       
+                    MAX_COUNTER_AUTO_1 = brewing_counter;
+                    WriteEEPROM(addressEEPROM_AUTO_1, MAX_COUNTER_AUTO_1);
+                    mode = INIT;
+                }
+                break;
+            case BREWING_0:
+                BIT_RELAY = 1;
+                if(brewing_counter > MAX_COUNTER_AUTO_0) mode = INIT;
+                if(is_button_pressed(AUTO_0_BUTTON)) mode = INIT;
+                
+                break;
+            case BREWING_1:
+                BIT_RELAY = 1;
+                if(brewing_counter > MAX_COUNTER_AUTO_1) mode = INIT;
+                if(is_button_pressed(AUTO_1_BUTTON)) mode = INIT;
+                
+                break;
+            case AUTO_CLEANING:
+                if(flag_timer1){
+                    if(BIT_RELAY == 1){
+                        SetTimer1_ms(10000);        //10s
+                        BIT_RELAY = 0;
                     }
                     else {
-                        SetTimer1_ms(1000);
-                        counter = 0;
-                        mode = AUTO_BREWING;
+                        cleaning_counter--;
+                        SetTimer1_ms(2000);         //2s
+                        BIT_RELAY = 1;
                     }
                 }
-            }
-        break;
-        case AUTO_BREWING:
-            RelayOn(1);
-            UpdateLedBuffer(counter);
-       
-            if(flag_timer1){
-                counter++;
-                flag_timer1 = 0;
-            }
-            if(counter >= TIME) mode = INIT;
-            if(is_button_pressed(RUN)) mode = INIT;
-        break;
-        case AUTO_CLEANING:
-            UpdateLedBuffer(cleaning_counter);
-            if(flag_timer1){
-                //turn on pump
-                if(pumpState == 0){
-                    //pump is off
-                    pumpState = 1;
-                    
-                    RelayOn(1); //turn on pump
-                    SetTimer1_ms(10000); //pump on in 10000ms
+                if(cleaning_counter == 0) mode = INIT;
+                if(is_button_pressed(AUTO_CLEANING_BUTTON)){
+                    mode = INIT;
                 }
-                else {
-                    //pump is on
-                    pumpState = 0;
-                    cleaning_counter--;
-                    RelayOn(0);
-                    SetTimer1_ms(2000); //pump off in 2000ms
-                }
-            }
-            if(cleaning_counter == 0) mode = INIT;
-            if(is_button_pressed(RUN)) mode = INIT;
-            break;
-        default: 
-             break;
+                break;
+            default:
+                mode = INIT;
+                break;
         }
-        
         Delay_ms(3);
     }
     return;
@@ -129,23 +123,27 @@ void main(void) {
 void InitSystem(void){
     CMCON = 0x07;
     
-    TRIS_BUTTON = 0b00110100;
-    TRIS_LED    = 0b00000000;
+    OPTION_REGbits.nRBPU = 0;       //portB weak pullup
+    OPTION_REGbits.INTEDG = 1;      //interrupt on rising edge
     
+    INTCONbits.INTE = 1;            //enable external interrupt RB0
+    TRIS_BUTTON = 0b00110100;    
     PORT_BUTTON = 0xFF;
-    PORT_LED = 0xFF;
     
+    PORTB = 0b00000001;
+    PORTB = 0xFF;
+    brewing_counter = 0;
     cleaning_counter = CLEANING_TIMES;
+    
     mode = INIT;
+    
+    MAX_COUNTER_AUTO_0 = ReadEEPROM(addressEEPROM_AUTO_0);
+    MAX_COUNTER_AUTO_1 = ReadEEPROM(addressEEPROM_AUTO_1);
     RelayOn(0);
     
     init_timer1(TIMER1_TIME);       //timer1 10ms   
     SetTimer1_ms(1000);
     
-    TIME = ReadEEPROM(addressEEPROMused);
-    if(TIME < 0 || TIME > 99) TIME = 0;
-    
-    UpdateLedBuffer(TIME);
 }
 
 

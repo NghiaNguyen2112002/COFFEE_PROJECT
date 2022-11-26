@@ -1,14 +1,14 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"221 C:\Program Files (x86)\Microchip\xc8\v1.36\include\pic16f628a.h
-[v _PORTB `Vuc ~T0 @X0 0 e@6 ]
-"166
-[s S7 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S7 . RA0 RA1 RA2 RA3 RA4 RA5 RA6 RA7 ]
-"165
-[u S6 `S7 1 ]
-[n S6 . . ]
-"177
-[v _PORTAbits `VS6 ~T0 @X0 0 e@5 ]
+"5 button_processing.c
+[c E635 0 1 2 .. ]
+[n E635 BUTTON_STATE RELEASED PRESSED PRESSED_S  ]
+"25 button.h
+[v _is_button_pressed `(uc ~T0 @X0 0 ef1`uc ]
+"26
+[v _is_button_pressed_s `(uc ~T0 @X0 0 ef1`uc ]
+[; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
+[; ;htc.h: 28: extern double __fpnormalize(double);
+[; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
 [; ;pic16f628a.h: 49: extern volatile unsigned char INDF @ 0x000;
 "51 C:\Program Files (x86)\Microchip\xc8\v1.36\include\pic16f628a.h
 [; ;pic16f628a.h: 51: asm("INDF equ 00h");
@@ -563,9 +563,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic16f628a.h: 1556: extern volatile __bit nRBPU @ (((unsigned) &OPTION_REG)*8) + 7;
 [; ;pic16f628a.h: 1558: extern volatile __bit nT1SYNC @ (((unsigned) &T1CON)*8) + 2;
 [; ;pic16f628a.h: 1560: extern volatile __bit nTO @ (((unsigned) &STATUS)*8) + 4;
-[; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
-[; ;htc.h: 28: extern double __fpnormalize(double);
-[; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
 [; ;pic.h: 28: extern void __nop(void);
 [; ;pic.h: 77: extern unsigned int flash_read(unsigned short addr);
 [; ;pic.h: 141: extern void flash_erase(unsigned short addr);
@@ -577,170 +574,139 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic.h: 186: extern unsigned char __resetbits;
 [; ;pic.h: 187: extern __bit __powerdown;
 [; ;pic.h: 188: extern __bit __timeout;
+[; ;led7seg.h: 17: void Display(unsigned char number);
+[; ;led7seg.h: 18: void LedEnable(unsigned char index);
+[; ;led7seg.h: 19: void UpdateLedBuffer(unsigned char time);
+[; ;led7seg.h: 20: void UpdateLed(unsigned char index);
 [; ;timer.h: 15: extern unsigned char flag_timer1;
 [; ;timer.h: 18: void init_timer1(unsigned int count);
 [; ;timer.h: 20: void start_timer1(void);
 [; ;timer.h: 22: void stop_timer1(void);
 [; ;timer.h: 23: void timer1_isr(void);
 [; ;timer.h: 25: void SetTimer1_ms(int time);
+"30 main.h
+[p x FOSC=INTOSCIO ]
+"31
+[p x WDTE=OFF ]
+"32
+[p x PWRTE=OFF ]
+"33
+[p x MCLRE=OFF ]
+"34
+[p x BOREN=OFF ]
+"35
+[p x LVP=OFF ]
+"36
+[p x CPD=OFF ]
+"37
+[p x CP=OFF ]
 [; ;button.h: 21: void InitButtonReading();
 [; ;button.h: 22: void button_reading(void);
 [; ;button.h: 24: unsigned char is_button_held(unsigned char index);
 [; ;button.h: 25: unsigned char is_button_pressed(unsigned char index);
 [; ;button.h: 26: unsigned char is_button_pressed_s(unsigned char index);
-"33 main.h
-[p x FOSC=INTOSCIO ]
-"34
-[p x WDTE=OFF ]
-"35
-[p x PWRTE=OFF ]
-"36
-[p x MCLRE=OFF ]
-"37
-[p x BOREN=OFF ]
-"38
-[p x LVP=OFF ]
-"39
-[p x CPD=OFF ]
-"40
-[p x CP=OFF ]
-[; ;led7seg.h: 17: void Display(unsigned char number);
-[; ;led7seg.h: 18: void LedEnable(unsigned char index);
-[; ;led7seg.h: 19: void UpdateLedBuffer(unsigned char time);
-[; ;led7seg.h: 20: void UpdateLed(unsigned char index);
-"8 led7seg.c
-[v _LEDDisplay `uc ~T0 @X0 -> 11 `i e ]
-[i _LEDDisplay
+[; ;button_processing.h: 14: void fsm_button_processing(void);
+[; ;button_processing.c: 4: enum BUTTON_STATE {RELEASED, PRESSED, PRESSED_S};
+"5 button_processing.c
+[v _state `E635 ~T0 @X0 -> 3 `i e ]
+[i _state
 :U ..
--> -> 8 `i `uc
--> -> 94 `i `uc
--> -> 65 `i `uc
--> -> 66 `i `uc
+. `E635 0
+. `E635 0
+. `E635 0
+..
+]
+[; ;button_processing.c: 5: enum BUTTON_STATE state[3] = {RELEASED, RELEASED, RELEASED};
+"7
+[v _fsm_button_processing `(v ~T0 @X0 1 ef ]
+{
+[; ;button_processing.c: 7: void fsm_button_processing(void){
+[e :U _fsm_button_processing ]
+[f ]
+"8
+[v _i `uc ~T0 @X0 1 a ]
+[; ;button_processing.c: 8: unsigned char i;
+[; ;button_processing.c: 9: for(i = 0; i < 3; i++){
 "9
--> -> 22 `i `uc
--> -> 34 `i `uc
--> -> 32 `i `uc
--> -> 78 `i `uc
-"10
--> -> 0 `i `uc
--> -> 2 `i `uc
--> -> 119 `i `uc
-..
-]
-[; ;led7seg.c: 8: unsigned char LEDDisplay[11] = {0x08, 0x5E, 0x41, 0x42,
-[; ;led7seg.c: 9: 0x16, 0x22, 0x20, 0x4E,
-[; ;led7seg.c: 10: 0x00, 0x02, 0x77};
-"12
-[v _LEDBuffer `uc ~T0 @X0 -> 2 `i e ]
-[i _LEDBuffer
-:U ..
--> -> 1 `i `uc
--> -> 2 `i `uc
-..
-]
-[; ;led7seg.c: 12: unsigned char LEDBuffer[2] = {1, 2};
-"16
-[v _Display `(v ~T0 @X0 1 ef1`uc ]
 {
-[; ;led7seg.c: 16: void Display(unsigned char number){
-[e :U _Display ]
-[v _number `uc ~T0 @X0 1 r1 ]
-[f ]
-[; ;led7seg.c: 17: if(number >= 0 && number <= 10){
-"17
-[e $ ! && >= -> _number `i -> 0 `i <= -> _number `i -> 10 `i 53  ]
-{
-[; ;led7seg.c: 18: PORTB = LEDDisplay[number];
-"18
-[e = _PORTB *U + &U _LEDDisplay * -> _number `ux -> -> # *U &U _LEDDisplay `ui `ux ]
-"19
-}
+[e = _i -> -> 0 `i `uc ]
+[e $ < -> _i `i -> 3 `i 53  ]
+[e $U 54  ]
 [e :U 53 ]
-[; ;led7seg.c: 19: }
-[; ;led7seg.c: 20: }
-"20
-[e :UE 52 ]
-}
-"22
-[v _LedEnable `(v ~T0 @X0 1 ef1`uc ]
 {
-[; ;led7seg.c: 22: void LedEnable(unsigned char index){
-[e :U _LedEnable ]
-[v _index `uc ~T0 @X0 1 r1 ]
-[f ]
-[; ;led7seg.c: 23: if(index == 0){
-"23
-[e $ ! == -> _index `i -> 0 `i 55  ]
+[; ;button_processing.c: 10: switch(state[i]){
+"10
+[e $U 57  ]
 {
-[; ;led7seg.c: 24: PORTAbits.RA0 = 1;
-"24
-[e = . . _PORTAbits 0 0 -> -> 1 `i `uc ]
-[; ;led7seg.c: 25: PORTAbits.RA7 = 0;
-"25
-[e = . . _PORTAbits 0 7 -> -> 0 `i `uc ]
-"26
-}
-[; ;led7seg.c: 26: }
-[e $U 56  ]
-"27
-[e :U 55 ]
-[; ;led7seg.c: 27: else if(index == 1){
-[e $ ! == -> _index `i -> 1 `i 57  ]
-{
-[; ;led7seg.c: 28: PORTAbits.RA0 = 0;
-"28
-[e = . . _PORTAbits 0 0 -> -> 0 `i `uc ]
-[; ;led7seg.c: 29: PORTAbits.RA7 = 1;
-"29
-[e = . . _PORTAbits 0 7 -> -> 1 `i `uc ]
-"30
-}
-[e :U 57 ]
-"31
-[e :U 56 ]
-[; ;led7seg.c: 30: }
-[; ;led7seg.c: 31: }
-[e :UE 54 ]
-}
-"33
-[v _UpdateLedBuffer `(v ~T0 @X0 1 ef1`uc ]
-{
-[; ;led7seg.c: 33: void UpdateLedBuffer(unsigned char time){
-[e :U _UpdateLedBuffer ]
-[v _time `uc ~T0 @X0 1 r1 ]
-[f ]
-[; ;led7seg.c: 34: if(time >= 0 && time <= 99){
-"34
-[e $ ! && >= -> _time `i -> 0 `i <= -> _time `i -> 99 `i 59  ]
-{
-[; ;led7seg.c: 35: LEDBuffer[0] = time / 10;
-"35
-[e = *U + &U _LEDBuffer * -> -> -> 0 `i `ui `ux -> -> # *U &U _LEDBuffer `ui `ux -> / -> _time `i -> 10 `i `uc ]
-[; ;led7seg.c: 36: LEDBuffer[1] = time % 10;
-"36
-[e = *U + &U _LEDBuffer * -> -> -> 1 `i `ui `ux -> -> # *U &U _LEDBuffer `ui `ux -> % -> _time `i -> 10 `i `uc ]
-"37
-}
+[; ;button_processing.c: 11: case RELEASED:
+"11
+[e :U 58 ]
+[; ;button_processing.c: 12: if(is_button_pressed(i)) state[i] = PRESSED;
+"12
+[e $ ! != -> ( _is_button_pressed (1 _i `i -> -> -> 0 `i `uc `i 59  ]
+[e = *U + &U _state * -> _i `ux -> -> # *U &U _state `ui `ux . `E635 1 ]
 [e :U 59 ]
-[; ;led7seg.c: 37: }
-[; ;led7seg.c: 38: }
-"38
-[e :UE 58 ]
+[; ;button_processing.c: 13: break;
+"13
+[e $U 56  ]
+[; ;button_processing.c: 14: case PRESSED:
+"14
+[e :U 60 ]
+[; ;button_processing.c: 15: if(is_button_pressed_s(i)) state[i] = PRESSED_S;
+"15
+[e $ ! != -> ( _is_button_pressed_s (1 _i `i -> -> -> 0 `i `uc `i 61  ]
+[e = *U + &U _state * -> _i `ux -> -> # *U &U _state `ui `ux . `E635 2 ]
+[e :U 61 ]
+[; ;button_processing.c: 16: if(!is_button_pressed(i)) state[i] = RELEASED;
+"16
+[e $ ! ! != -> ( _is_button_pressed (1 _i `i -> -> -> 0 `i `uc `i 62  ]
+[e = *U + &U _state * -> _i `ux -> -> # *U &U _state `ui `ux . `E635 0 ]
+[e :U 62 ]
+[; ;button_processing.c: 17: break;
+"17
+[e $U 56  ]
+[; ;button_processing.c: 18: case PRESSED_S:
+"18
+[e :U 63 ]
+[; ;button_processing.c: 19: if(!is_button_pressed(i)) state[i] = RELEASED;
+"19
+[e $ ! ! != -> ( _is_button_pressed (1 _i `i -> -> -> 0 `i `uc `i 64  ]
+[e = *U + &U _state * -> _i `ux -> -> # *U &U _state `ui `ux . `E635 0 ]
+[e :U 64 ]
+[; ;button_processing.c: 20: break;
+"20
+[e $U 56  ]
+[; ;button_processing.c: 21: default:
+"21
+[e :U 65 ]
+[; ;button_processing.c: 22: state[i] = RELEASED;
+"22
+[e = *U + &U _state * -> _i `ux -> -> # *U &U _state `ui `ux . `E635 0 ]
+[; ;button_processing.c: 23: break;
+"23
+[e $U 56  ]
+"24
 }
-"39
-[v _UpdateLed `(v ~T0 @X0 1 ef1`uc ]
-{
-[; ;led7seg.c: 39: void UpdateLed(unsigned char index){
-[e :U _UpdateLed ]
-[v _index `uc ~T0 @X0 1 r1 ]
-[f ]
-[; ;led7seg.c: 40: LedEnable(index);
-"40
-[e ( _LedEnable (1 _index ]
-[; ;led7seg.c: 41: Display( LEDBuffer[index] );
-"41
-[e ( _Display (1 *U + &U _LEDBuffer * -> _index `ux -> -> # *U &U _LEDBuffer `ui `ux ]
-[; ;led7seg.c: 42: }
-"42
-[e :UE 60 ]
+[; ;button_processing.c: 24: }
+[e $U 56  ]
+"10
+[e :U 57 ]
+[e [\ *U + &U _state * -> _i `ux -> -> # *U &U _state `ui `ux , $ . `E635 0 58
+ , $ . `E635 1 60
+ , $ . `E635 2 63
+ 65 ]
+"24
+[e :U 56 ]
+"25
+}
+"9
+[e ++ _i -> -> 1 `i `uc ]
+[e $ < -> _i `i -> 3 `i 53  ]
+[e :U 54 ]
+"25
+}
+[; ;button_processing.c: 25: }
+[; ;button_processing.c: 27: }
+"27
+[e :UE 52 ]
 }
